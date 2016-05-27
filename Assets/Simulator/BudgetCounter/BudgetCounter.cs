@@ -24,7 +24,7 @@ public class BudgetCounter : MonoBehaviour {
 	public void Update() {
 		if (freeze) return;
 		Timer timer = GameObject.Find("Timer").GetComponent<Timer>();
-		if (timer.speed == 0) {
+		if (timer.Speed == 0) {
 			return;
 		};
 		TimeSpan timeElapsed = timer.TimeElapsed;

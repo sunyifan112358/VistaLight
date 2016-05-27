@@ -2,8 +2,9 @@
 using System;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class ClockVO : MonoBehaviour {
+public class ClockVO : NetworkBehaviour {
 
 	public Timer Timer;
 	public Image HourHand;

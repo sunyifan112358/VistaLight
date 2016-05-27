@@ -27,7 +27,7 @@ public class NetworkScheduler : MonoBehaviour {
 	private IEnumerator Schedule() {
 		Timer timer = GameObject.Find("Timer").GetComponent<Timer>();
 		double timerSpeed = timer.Speed;
-		timer.speed = 0;
+		timer.Speed = 0;
 		int numberSteps = 2 + priorityQueue.GetCount();
 		int stepsCompleted = 1;
 		UpdateProgress(stepsCompleted, numberSteps);

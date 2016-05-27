@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using UnityEngine.Networking;
 
 public enum GamePhase{ 
 	Simulation, Decision
@@ -12,7 +13,6 @@ public class RoundManager : MonoBehaviour {
 	public GamePhase phase = GamePhase.Simulation;
 
 	public GameObject SubmitButton;
-	public TimeWidgetController timeWidgetController;
 	public Timer timer;
 	public ShipListController shipListController;
 	public NetworkScheduler networkScheduler;
@@ -39,7 +39,8 @@ public class RoundManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mapLoader.LoadMap ();
-		StartSimulationPhase ();
+		SimulationPhaseStartTime = timer.VirtualTime;
+		phase = GamePhase.Simulation;
 
 		if (!sceneSetting.inTutorial) {
 			ShowIntroductionWindow ();
@@ -57,7 +58,7 @@ public class RoundManager : MonoBehaviour {
 	private void ShowIntroductionWindow() {
 		introductionWindowController.gameObject.SetActive (true);
 		introductionWindowController.UpdateText ();
-		timeWidgetController.PauseGame ();
+		timer.Speed = 0;
 	}
 
 	public void CloseIntroductionWindow() {
@@ -90,7 +91,7 @@ public class RoundManager : MonoBehaviour {
 	}
 
 	public void StartDecisionPhase() {
-		timeWidgetController.PauseGame ();
+		timer.CmdPause ();
 
 		recommendataionSystem.EnableRecommendationButton ();
 
@@ -104,7 +105,7 @@ public class RoundManager : MonoBehaviour {
 	}
 
 	public void StartSimulationPhase() {
-		timeWidgetController.SetSpeedOne ();
+		timer.CmdSpeedOne ();
 
 		recommendataionSystem.DisableRecommendationButton ();
 
