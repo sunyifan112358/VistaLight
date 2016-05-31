@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class PriorityQueue : MonoBehaviour {
+public class PriorityQueue : NetworkBehaviour {
 
 	public List<ShipController> queue = new List<ShipController>();
 
+	[Server]
 	public void EnqueueShip(ShipController ship) {
 		queue.Add(ship);
 	}
 
+	[Server]
 	public void RemoveShip(ShipController ship) {
 		queue.Remove(ship);
 	}
@@ -35,7 +38,8 @@ public class PriorityQueue : MonoBehaviour {
 		return queue[priority];
 	}
 
-	public void SwapPriority(int priority, int otherPriority) {
+	[Command]
+	public void CmdSwapPriority(int priority, int otherPriority) {
 		ShipController temp = queue [priority - 1];
 		queue [priority - 1] = queue [otherPriority - 1];
 		queue [otherPriority - 1] = temp;

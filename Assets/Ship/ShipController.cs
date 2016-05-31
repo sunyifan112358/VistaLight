@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public enum ShipStatus { 
 	Unloading,
@@ -13,7 +14,7 @@ public enum ShipStatus {
 	RedSignal
 }
 
-public class ShipController : MonoBehaviour {
+public class ShipController : NetworkBehaviour {
 
 	public ShipSchedule schedule;
 	private Ship ship;

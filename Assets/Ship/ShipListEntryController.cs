@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 
-public class ShipListEntryController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class ShipListEntryController : NetworkBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
 	public ShipController shipController;
 
@@ -183,7 +184,7 @@ public class ShipListEntryController : MonoBehaviour, IBeginDragHandler, IDragHa
 	}
 
 	#region IBeginDragHandler implementation
-
+	[ClientCallback]
 	public void OnBeginDrag (PointerEventData eventData)
 	{
 		if (inDecisionMode) {
@@ -196,7 +197,7 @@ public class ShipListEntryController : MonoBehaviour, IBeginDragHandler, IDragHa
 	#endregion
 
 	#region IDragHandler implementation
-
+	[ClientCallback]
 	public void OnDrag (PointerEventData eventData)
 	{
 		if (dragging) {
@@ -229,7 +230,7 @@ public class ShipListEntryController : MonoBehaviour, IBeginDragHandler, IDragHa
 					return;
 				}
 
-				priorityQueue.SwapPriority (oldPriority, newPriority);
+				priorityQueue.CmdSwapPriority (oldPriority, newPriority);
 			}
 		}
 	}
@@ -237,7 +238,7 @@ public class ShipListEntryController : MonoBehaviour, IBeginDragHandler, IDragHa
 	#endregion
 
 	#region IEndDragHandler implementation
-
+	[ClientCallback]
 	public void OnEndDrag (PointerEventData eventData)
 	{
 		if (!shipController.highLighted) {
