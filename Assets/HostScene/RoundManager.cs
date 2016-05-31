@@ -8,7 +8,7 @@ public enum GamePhase{
 	Simulation, Decision
 }
 
-public class RoundManager : MonoBehaviour {
+public class RoundManager : NetworkBehaviour {
 
 	public GamePhase phase = GamePhase.Simulation;
 
@@ -118,7 +118,8 @@ public class RoundManager : MonoBehaviour {
 		logger.LogPhaseChange (GamePhase.Simulation);
 	}
 
-	public void SubmitAndContinueButtonClickHandler() {
+	[Command]
+	public void CmdSubmitAndContinueButtonClickHandler() {
 		if (GameObject.Find ("SceneSetting").GetComponent<SceneSetting> ().GiveRecommendation) {
 			if (!recommendataionSystem.recommendationRequested ||
 			   !recommendataionSystem.isAllRecommendationsProcessed ()) {
