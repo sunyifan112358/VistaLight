@@ -219,7 +219,7 @@ public class ShipListEntryController : NetworkBehaviour, IBeginDragHandler, IDra
 					newPriority = oldPriority - 1;
 					yOffset -= listEntryOffset;
 				} else if (yOffset - (listEntryOffset / 2) < -listEntryOffset) {
-					if (oldPriority == priorityQueue.GetCount ()) {
+					if (oldPriority == priorityQueue.Count) {
 						// Already at botton, ignore.
 						return;
 					}
@@ -230,7 +230,7 @@ public class ShipListEntryController : NetworkBehaviour, IBeginDragHandler, IDra
 					return;
 				}
 
-				priorityQueue.CmdSwapPriority (oldPriority, newPriority);
+				priorityQueue.SwapPriority (oldPriority, newPriority);
 			}
 		}
 	}

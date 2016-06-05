@@ -1,20 +1,25 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
-public class PriorityQueue : NetworkBehaviour {
+[Serializable]
+public class PriorityQueue {
+	List<ShipController> queue = new List<ShipController> ();
 
-	public List<ShipController> queue = new List<ShipController>();
-
-	[Server]
-	public void EnqueueShip(ShipController ship) {
-		queue.Add(ship);
+	public int Count {
+		get {
+			return queue.Count;
+		}
 	}
 
-	[Server]
+	public void EnqueueShip(ShipController ship) {
+		queue.Add (ship);
+	}
+
 	public void RemoveShip(ShipController ship) {
-		queue.Remove(ship);
+		queue.Remove (ship);
 	}
 
 	public void ChangePriority(ShipController ship, int priority) {
@@ -30,16 +35,11 @@ public class PriorityQueue : NetworkBehaviour {
 		return queue.IndexOf(ship) + 1;
 	}
 
-	public int GetCount() {
-		return queue.Count;	
-	}
-
 	public ShipController GetShipWithPriority(int priority) {
 		return queue[priority];
 	}
 
-	[Command]
-	public void CmdSwapPriority(int priority, int otherPriority) {
+	public void SwapPriority(int priority, int otherPriority) {
 		ShipController temp = queue [priority - 1];
 		queue [priority - 1] = queue [otherPriority - 1];
 		queue [otherPriority - 1] = temp;
@@ -48,5 +48,12 @@ public class PriorityQueue : NetworkBehaviour {
 	public void Clear() {
 		queue.Clear ();
 	}
-	
+
+	public IEnumerator GetEnumerator() {
+		return queue.GetEnumerator ();
+	}
+
+	public void Propose(PriorityQueue queue) {
+		this.queue = queue.queue;
+	}
 }

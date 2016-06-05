@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class NetworkScheduler : MonoBehaviour {
 
 	private bool rescheduleRequested = false;
 
-	public PriorityQueue priorityQueue;
-	public PriorityQueue waitList;
+	public PriorityQueue priorityQueue = new PriorityQueue ();
+	public PriorityQueue waitList = new PriorityQueue ();
 	public bool Scheduling = false;
 
 	public GameObject schedulingMask;
@@ -21,14 +23,14 @@ public class NetworkScheduler : MonoBehaviour {
 	}
 
 	void Awake() {
-		logger = GameObject.Find("BasicLoggerManager").GetComponent<VistaLightsLogger>();	
+		logger = GameObject.Find("BasicLoggerManager").GetComponent<VistaLightsLogger>();
 	}
 
 	private IEnumerator Schedule() {
 		Timer timer = GameObject.Find("Timer").GetComponent<Timer>();
 		double timerSpeed = timer.Speed;
 		timer.Speed = 0;
-		int numberSteps = 2 + priorityQueue.GetCount();
+		int numberSteps = 2 + priorityQueue.Count;
 		int stepsCompleted = 1;
 		UpdateProgress(stepsCompleted, numberSteps);
 		ShowSchedulingMask();
@@ -37,9 +39,8 @@ public class NetworkScheduler : MonoBehaviour {
 		ClearAllSchedule();
 		yield return null;
 
-		for (int i = 0; i < priorityQueue.GetCount(); i++) {
+		foreach (ShipController ship in priorityQueue) {
 			ShipScheduler shipScheduler = new ShipScheduler();
-			ShipController ship = priorityQueue.GetShipWithPriority(i);
 			shipScheduler.Ship = ship;
 			shipScheduler.Schedule();
 
@@ -74,12 +75,12 @@ public class NetworkScheduler : MonoBehaviour {
 		ReservationManager reservationManager = GameObject.Find("MapUtil").GetComponent<ReservationManager>();
 		reservationManager.ClearAll();
 
-		foreach (ShipController ship in priorityQueue.queue) {
+		foreach (ShipController ship in priorityQueue) {
 			ship.schedule = null;
 			ship.status = ShipStatus.Scheduling;
 		}
 
-		foreach (ShipController ship in waitList.queue) {
+		foreach (ShipController ship in waitList) {
 			ship.schedule = null;
 			ship.status = ShipStatus.RedSignal;
 		}
@@ -125,11 +126,10 @@ public class NetworkScheduler : MonoBehaviour {
 	}
 
 	public int PriorityQueueLength() {
-		return priorityQueue.queue.Count;
+		return priorityQueue.Count;
 	}
 
 	public int ShipPositionInWaitList(ShipController ship) {
 		return waitList.GetPriority(ship);
 	}
-	
 }

@@ -29,6 +29,9 @@ public class GameOverSceneStarter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (mapController.Map == null) {
+			return;
+		}
 		bool shouldGameEnd = false;
 		if (IsEndTimeReached ()) {
 			shouldGameEnd = true;
@@ -56,6 +59,9 @@ public class GameOverSceneStarter : MonoBehaviour {
     }
 
 	private bool IsEndTimeReached() {
+		if (mapController.Map == null) {
+			return false;
+		}
 		DateTime currentTime = timer.VirtualTime;
 		DateTime gameEndTime = mapController.Map.EndTime;
 		return currentTime >= gameEndTime;
@@ -64,8 +70,8 @@ public class GameOverSceneStarter : MonoBehaviour {
 	private bool IsAllEventProcessed() {
 		// FIXME(Yifan): Check if oil is cleaned here
 		if (mapEventProcessor.MapEvents.Count == 0 && 
-			priorityQueue.GetCount () == 0 && 
-			waitList.GetCount () == 0) {
+			priorityQueue.Count == 0 && 
+			waitList.Count == 0) {
 			return true;
 		} 
 		return false;

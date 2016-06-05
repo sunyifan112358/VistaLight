@@ -96,7 +96,7 @@ public class RecommendationSystem : MonoBehaviour {
 
 		double maxNumPassengers = 0;
 		ShipController shipToRecommend = null;
-		foreach (ShipController ship in priorityQueue.queue) {
+		foreach (ShipController ship in priorityQueue) {
 			if (!isShipInConsideration (ship)) {
 				continue;
 			}
@@ -131,7 +131,7 @@ public class RecommendationSystem : MonoBehaviour {
 	public void RecommendOverdueShip() {
 		TimeSpan maxOverdueTime = TimeSpan.MinValue;
 		ShipController shipToRecommend = null;
-		foreach (ShipController ship in priorityQueue.queue) {
+		foreach (ShipController ship in priorityQueue) {
 			
 			if (!isShipInConsideration (ship))
 				continue;
@@ -168,7 +168,7 @@ public class RecommendationSystem : MonoBehaviour {
 
 			double highestValue = 0;
 			ShipController shipToRecommend = null;
-			foreach (ShipController ship in priorityQueue.queue) {
+			foreach (ShipController ship in priorityQueue) {
 				if (!isShipInConsideration (ship))
 					continue;
 

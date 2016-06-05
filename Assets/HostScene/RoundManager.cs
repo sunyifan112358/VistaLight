@@ -12,7 +12,7 @@ public class RoundManager : NetworkBehaviour {
 
 	public GamePhase phase = GamePhase.Simulation;
 
-	public GameObject SubmitButton;
+	public IndustryManager industryManager;
 	public Timer timer;
 	public ShipListController shipListController;
 	public NetworkScheduler networkScheduler;
@@ -36,9 +36,16 @@ public class RoundManager : NetworkBehaviour {
 	public DateTime DecisionPhaseStartTime;
 	public TimeSpan DecisionTimeLimit = new TimeSpan(0, 2, 0);
 
+	void Awake() {
+		logger = GameObject.Find("BasicLoggerManager").GetComponent<VistaLightsLogger>();	
+		sceneSetting = GameObject.Find ("SceneSetting").GetComponent<SceneSetting> ();
+
+		logger.StartRun ("run");
+		mapLoader.LoadMap ();
+	}
+
 	// Use this for initialization
 	void Start () {
-		mapLoader.LoadMap ();
 		SimulationPhaseStartTime = timer.VirtualTime;
 		phase = GamePhase.Simulation;
 
@@ -46,13 +53,6 @@ public class RoundManager : NetworkBehaviour {
 			ShowIntroductionWindow ();
 		}
 
-	}
-
-	void Awake() {
-		logger = GameObject.Find("BasicLoggerManager").GetComponent<VistaLightsLogger>();	
-		sceneSetting = GameObject.Find ("SceneSetting").GetComponent<SceneSetting> ();
-
-		logger.StartRun ("run");
 	}
 
 	private void ShowIntroductionWindow() {
@@ -95,7 +95,7 @@ public class RoundManager : NetworkBehaviour {
 
 		recommendataionSystem.EnableRecommendationButton ();
 
-		SubmitButton.SetActive (true);
+		industryManager.SendProposalRequest ();
 		shipListController.ShowNewPriority ();
 
 		DecisionPhaseStartTime = DateTime.Now;
@@ -109,7 +109,6 @@ public class RoundManager : NetworkBehaviour {
 
 		recommendataionSystem.DisableRecommendationButton ();
 
-		SubmitButton.SetActive (false);
 		shipListController.HideNewPriority ();
 
 		SimulationPhaseStartTime = timer.VirtualTime;
