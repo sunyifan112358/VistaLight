@@ -11,15 +11,14 @@ public class IndustryManager : NetworkBehaviour {
 	List<Industry> assignedIndustries = new List<Industry> ();
 	int nextProposer;
 
-	[Command]
-	public void CmdRequestIndustry(GameObject playerObject) {
+	[Server]
+	public void AssignIndustry(Industry player) {
 		if (freeIndustries.Count == 0) {
 			return;
 		}
 		IndustryType chosenIndustry = freeIndustries [UnityEngine.Random.Range (0, freeIndustries.Count)];
-		Industry clientHandle = playerObject.GetComponent<Industry> ();
-		assignedIndustries.Add (clientHandle);
-		clientHandle.AssignIndustry (chosenIndustry);
+		assignedIndustries.Add (player);
+		player.AssignIndustry (chosenIndustry);
 
 		freeIndustries.Remove (chosenIndustry);
 	}

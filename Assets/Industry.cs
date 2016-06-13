@@ -4,9 +4,10 @@ using UnityEngine.Networking;
 using System;
 using UnityEngine.UI;
 
-public class Industry : NetworkBehaviour {
-	IndustryManager industryManager;
-	NetworkScheduler networkScheduler;
+public class Industry : NetworkBehaviour
+{
+	public IndustryManager IndustryManager;
+	public NetworkScheduler NetworkScheduler;
 
 	[SyncVar]
 	public IndustryType playerIndustry;
@@ -15,40 +16,40 @@ public class Industry : NetworkBehaviour {
 	public GameObject SubmitButton;
 	PriorityQueue queueProposal;
 
-	void Start() {
-		SubmitButton = GameObject.Find ("SubmitButton");
-		SubmitButton.GetComponent<Button> ().onClick.AddListener(delegate () {
-			this.ProposeQueue ();
-		});
-		SubmitButton.SetActive (false);
+	void Start ()
+	{
 	}
 
-	public override void OnStartLocalPlayer() {
-		industryManager = GameObject.Find ("IndustryManager").GetComponent<IndustryManager> ();
-		networkScheduler = GameObject.Find ("NetworkScheduler").GetComponent<NetworkScheduler> ();
-
-		industryManager.CmdRequestIndustry (gameObject);
-	}
-
-	void Update() {
-		if (!playerIndustrySet) {
-			connectionToClient.Disconnect ();
+	void Update ()
+	{
+		if (connectionToServer == null || !connectionToServer.isConnected) {
+			return;
+		}
+		if (isLocalPlayer && !playerIndustrySet) {
+			connectionToServer.Disconnect ();
 		}
 	}
 
-	public void AssignIndustry(IndustryType industry) {
+	public void AssignIndustry (IndustryType industry)
+	{
 		playerIndustry = industry;
 		playerIndustrySet = true;
+
+		SubmitButton.GetComponent<Button> ().onClick.AddListener (delegate () {
+			this.ProposeQueue ();
+		});
 	}
 
-	public void MakeProposer() {
+	public void MakeProposer ()
+	{
 		SubmitButton.SetActive (true);
-		queueProposal = networkScheduler.priorityQueue;
+		queueProposal = NetworkScheduler.priorityQueue;
 	}
 
 	[ClientCallback]
-	public void ProposeQueue () {
+	public void ProposeQueue ()
+	{
 		SubmitButton.SetActive (false);
-		industryManager.CmdPropose (queueProposal);
+		IndustryManager.CmdPropose (queueProposal);
 	}
 }
