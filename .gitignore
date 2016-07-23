@@ -25,3 +25,6 @@ Thumbs.db.meta
 
 # Log file
 *.json
+
+#npm
+node_module
