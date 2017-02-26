@@ -12,6 +12,7 @@ public class RecommendationController : MonoBehaviour {
 	public Button AccpetButton;
 	public Button DenyButton;
 	public bool isProcessed = false;
+    public bool accepted = false;
 
 	public VistaLightsLogger logger;
 
@@ -36,6 +37,7 @@ public class RecommendationController : MonoBehaviour {
 		AcceptImage.gameObject.SetActive (true);
 		logger.LogRecommendationAction (true, recommendation);
 		isProcessed = true;
+        accepted = true;
 	}
 
 	public void PerformeRecommendation() {
@@ -47,6 +49,7 @@ public class RecommendationController : MonoBehaviour {
 		DenyImage.gameObject.SetActive (true);
 		logger.LogRecommendationAction (false, recommendation);
 		isProcessed = true;
+        accepted = false;
 	}
 
 	public void EnableButtons() {

@@ -132,7 +132,21 @@ public class RoundManager : MonoBehaviour {
 
 
 	public void SubmitAndContinue() {
-		recommendataionSystem.ClearRecommendation ();
+        for (int x = 0; x < recommendataionSystem.recommendations.Count; x++) {
+            if (!recommendataionSystem.recommendations[x].accepted && recommendataionSystem.recommendations[x].isActiveAndEnabled) {
+                recommendataionSystem.denyCount++;
+            }
+            if (recommendataionSystem.recommendations[x].accepted)
+            {
+                recommendataionSystem.denyCount = 0;
+            }
+        }
+        if (recommendataionSystem.denyCount >= 10)
+        {
+            recommendataionSystem.denyCount = 0;
+            notificationSystem.Notify(NotificationType.Warning, "You've been ignoring a lot of reccomendations, maybe try listening to a few to raise profits.");
+        }
+        recommendataionSystem.ClearRecommendation ();
 
 		Submit ();
 		StartSimulationPhase ();

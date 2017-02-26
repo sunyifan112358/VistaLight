@@ -19,6 +19,8 @@ public class RecommendationSystem : MonoBehaviour {
 	public Timer timer;
 	public GameObject RecommendationTab;
 
+    public int denyCount = 0;
+
 	// Use this for initialization
 	void Start () {
 		SceneSetting sceneSetting = GameObject.Find ("SceneSetting").GetComponent<SceneSetting> ();
@@ -32,7 +34,7 @@ public class RecommendationSystem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	public void RequestRecommendation() {
