@@ -76,7 +76,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogChangeShipPriority(Ship ship, int new_priority) {
-		JSONClass details = new JSONClass();
+        LogAllShipsStates();
+        JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details["ship_id"] = ship.shipID.ToString();
 		details["new_priority"] = new_priority.ToString();
@@ -84,7 +85,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogGameOver(double money, double welfare) {
-		JSONClass details = new JSONClass();
+        LogAllShipsStates();
+        JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details["budget"] = money.ToString();
 		details["welfare"] = welfare.ToString();
@@ -99,7 +101,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogOilSpilling(OilSpillingEvent oilSpillingEvent) {
-		JSONClass details = new JSONClass();
+        LogAllShipsStates();
+        JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["map_event"] = "Oil Spilling";
 		details ["x"] = oilSpillingEvent.X.ToString ();
@@ -111,7 +114,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogShipGeneration(ShipGenerationEvent shipGenerationEvent) {
-		JSONClass details = new JSONClass();
+        LogAllShipsStates();
+        JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["map_event"] = "Ship Generation";
 		details ["x"] = shipGenerationEvent.X.ToString ();
@@ -128,7 +132,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogRedGreenSignal(Ship ship, string signal) {
-		JSONClass details = new JSONClass();
+        LogAllShipsStates();
+        JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["ship_id"] = ship.shipID.ToString();
 		details ["signal"] = signal;
@@ -136,7 +141,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogPhaseChange(GamePhase phase) {
-		JSONClass details = new JSONClass();
+        LogAllShipsStates();
+        JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["phase"] = phase.ToString();
 		TheLogger.instance.TakeAction(1, details);
@@ -150,7 +156,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogRecommendationAction(bool isAccepted, Recommendation recommendation) {
-		JSONClass details = new JSONClass();
+        LogAllShipsStates();
+        JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["isAccepted"] = isAccepted.ToString();
 		details ["ship"] = recommendation.ship.Ship.shipID.ToString();
@@ -173,6 +180,7 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void EndRun(double money, double welfare, double dockUtilization) {
+        LogAllShipsStates();
 		JSONClass details = new JSONClass ();
 		AddTimeInformation (details);
 		details["budget"] = money.ToString();
@@ -181,5 +189,26 @@ public class VistaLightsLogger : MonoBehaviour {
 		TheLogger.instance.EndRun(details);
 		inRun = false;
 	}
+
+    public void LogAllShipsStates() {
+        ShipController[] ships = FindObjectsOfType<ShipController>();
+        JSONClass details = new JSONClass();
+        AddTimeInformation(details);
+        details["log_event"] = "Log All Ship States";
+        for (int x = 0; x < ships.Length; x++)
+        {
+            details["x " + x] = ships[x].Ship.X.ToString();
+            details["y " + x] = ships[x].Ship.Y.ToString();
+
+            details["ship_id " + x] = ships[x].Ship.shipID.ToString();
+            details["name " + x] = ships[x].Ship.Name;
+            details["status " + x] = ships[x].status.ToString();
+            details["industry " + x] = ships[x].Ship.Industry.ToString();
+            details["cargo " + x] = ships[x].Ship.cargo.ToString();
+            details["value " + x] = ships[x].Ship.value.ToString();
+            details["due_time " + x] = ships[x].Ship.dueTime.ToString();
+        }
+        TheLogger.instance.TakeAction(1, details);
+    }
 }
 

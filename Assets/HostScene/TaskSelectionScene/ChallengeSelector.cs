@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ChallengeSelector : MonoBehaviour {
 	public SceneSetting sceneSetting;
+    public bool randRecommendations;
 	public bool tutorialPlayed = false;
 	public bool challenge1Played = false;
 	public bool challenge2Played = false;
@@ -15,8 +16,15 @@ public class ChallengeSelector : MonoBehaviour {
 	void Awake() {
 		DontDestroyOnLoad(transform.gameObject);
 		DestoryIfInstanceExist ();
-
-		logger = GameObject.Find ("BasicLoggerManager").GetComponent<VistaLightsLogger> ();
+        int x = Random.Range(0, 100);
+        if (x < 50) {
+            randRecommendations = false;
+        }
+        else
+        {
+            randRecommendations = true;
+        }
+        logger = GameObject.Find ("BasicLoggerManager").GetComponent<VistaLightsLogger> ();
 	}
 
 	private static ChallengeSelector instance = null;
@@ -40,14 +48,15 @@ public class ChallengeSelector : MonoBehaviour {
 
 	public void SelectTutorial() {	
 		sceneSetting.MapName = "houston_game_0";
-		sceneSetting.inTutorial = true;
+        sceneSetting.GiveRecommendation = randRecommendations;
+        sceneSetting.inTutorial = true;
 		tutorialPlayed = true;
 		StartGame ();
 	}
 
 	public void SelectChallenge1() {
 		sceneSetting.MapName = "houston_game_1";
-		sceneSetting.GiveRecommendation = false;
+		sceneSetting.GiveRecommendation = randRecommendations;
 		sceneSetting.inTutorial = false;
 		challenge1Played = true;
 		StartGame ();
@@ -55,7 +64,7 @@ public class ChallengeSelector : MonoBehaviour {
 
 	public void SelectChallenge2() {
 		sceneSetting.MapName = "houston_game_2";
-		//sceneSetting.GiveRecommendation = true;
+		sceneSetting.GiveRecommendation = randRecommendations;
 		//sceneSetting.RecommendWithJustification = false;
 		sceneSetting.inTutorial = false;
 		challenge2Played = true;
@@ -65,7 +74,7 @@ public class ChallengeSelector : MonoBehaviour {
 
 	public void SelectChallenge3() {
 		sceneSetting.MapName = "houston_game_3";
-		//sceneSetting.GiveRecommendation = true;
+		sceneSetting.GiveRecommendation = randRecommendations;
 		//sceneSetting.RecommendWithJustification = true;
 		sceneSetting.inTutorial = false;
 		challenge3Played = true;

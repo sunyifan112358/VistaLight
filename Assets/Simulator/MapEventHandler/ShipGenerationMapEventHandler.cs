@@ -45,7 +45,7 @@ public class ShipGenerationMapEventHandler : IMapEventHandler {
 		string content = String.Format("{0} ship {1} arrived at anchor field and is waiting for scheduling.",
 			ship.Industry.ToString(), ship.Name);
 
-		notificationSystem.Notify (NotificationType.Information, content);
+		//notificationSystem.Notify (NotificationType.Information, content);
 	}
 
 }
