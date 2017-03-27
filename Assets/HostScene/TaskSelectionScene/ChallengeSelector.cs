@@ -18,14 +18,14 @@ public class ChallengeSelector : MonoBehaviour {
 		DontDestroyOnLoad(transform.gameObject);
 		DestoryIfInstanceExist ();
         int x = Random.Range(0, 100);
-        if (x < 50) {
+        if (x < 33) {
             randRecommendations = false;
         }
         else
         {
             randRecommendations = true;
             int y = Random.Range(0, 100);
-            if (x < 50)
+            if (y < 50)
             {
                 randFeedback = false;
             }
