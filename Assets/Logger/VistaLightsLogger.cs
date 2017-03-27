@@ -200,6 +200,7 @@ public class VistaLightsLogger : MonoBehaviour {
             details["x " + x] = ships[x].Ship.X.ToString();
             details["y " + x] = ships[x].Ship.Y.ToString();
 
+            details["priority" + x] = ships[x].GetShipPriority().ToString();
             details["ship_id " + x] = ships[x].Ship.shipID.ToString();
             details["name " + x] = ships[x].Ship.Name;
             details["status " + x] = ships[x].status.ToString();

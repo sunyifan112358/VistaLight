@@ -12,12 +12,13 @@ public class NotificationSystem : MonoBehaviour {
 	public Scrollbar scrollBar;
 	private bool scrolling = false;
 
-	public Timer timer; 
+	public Timer timer;
+    SceneSetting sceneSetting;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+    // Use this for initialization
+    void Start () {
+        sceneSetting = GameObject.Find("SceneSetting").GetComponent<SceneSetting>();
+    }
 
 	public void ScrollToBottom() {
 		if (!scrolling) {
@@ -75,7 +76,9 @@ public class NotificationSystem : MonoBehaviour {
 		notification.time = timer.VirtualTime;
 		notification.content = content;
 		notification.type = type;
-
-		AddNotification (notification);
+        if (notification.type != NotificationType.Information || ((notification.type == NotificationType.Information) && sceneSetting.GiveFeedback))
+        {
+            AddNotification(notification);
+        }
 	}
 }

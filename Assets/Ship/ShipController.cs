@@ -38,6 +38,7 @@ public class ShipController : MonoBehaviour {
 	public double heading = 0;
 
 	public bool highLighted = false;
+    public NotificationSystem notificationSystem;
 
 	public Ship Ship{
 		get { return ship; }
@@ -49,8 +50,8 @@ public class ShipController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        notificationSystem = GameObject.Find("RoundManager").GetComponent<RoundManager>().notificationSystem;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -154,6 +155,7 @@ public class ShipController : MonoBehaviour {
 		double cargoOverDueCost = 1e-9;
 		Timer timer = GameObject.Find("Timer").GetComponent<Timer>();
 		if (ship.Industry == IndustryType.Cruise && timer.VirtualTime >= ship.dueTime) {
+            notificationSystem.Notify(NotificationType.Information, "Cruise Ships' tardiness heavily affect welfare. Be sure to Prioritize them if they are late.");
 			double welfareImpact = ship.cargo * cargoOverDueCost * timer.TimeElapsed.TotalSeconds;
 			GameObject.Find ("WelfareCounter").GetComponent<WelfareCounter> ().ReduceWelfare (welfareImpact);
 		}

@@ -30,15 +30,30 @@ public class ShipListController : MonoBehaviour {
 		RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
 		rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x,
 			rectTransform.sizeDelta.y + 30);
-
-		entries.Add (entryController);
-		/*
+        int sameWaitingShipCount = 0;
+        int sameShipCount = 0;
+        foreach (ShipListEntryController s in entries)
+        {
+            if (entryController.type.text == s.type.text)
+            {
+                sameShipCount++;
+                if (s.status.text == ShipStatus.Waiting.ToString())
+                {
+                    sameWaitingShipCount++;
+                }
+            }
+        }
+        if (sameShipCount > 4 && sameWaitingShipCount >= sameShipCount/2) {
+            roundManager.notificationSystem.Notify(NotificationType.Information, "Prioritize industries that are unloading significantly less");
+        }
+        entries.Add (entryController);
+        /*
 		if (roundManager.phase == GamePhase.Decision) {
 			entryController.ShowNewPriority ();
 		}
 		*/
 
-		return entryGO;
+        return entryGO;
 	}
 
 	public void RemoveShip(ShipController shipController) {

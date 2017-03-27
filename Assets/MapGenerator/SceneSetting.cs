@@ -45,4 +45,7 @@ public class SceneSetting : MonoBehaviour {
 
 	// Show the reason why the recommendation is given
 	public bool RecommendWithJustification = false;
+
+    // Whether or not give certain training feedback
+    public bool GiveFeedback = false;
 }

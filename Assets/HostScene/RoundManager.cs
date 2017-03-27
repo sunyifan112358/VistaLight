@@ -144,13 +144,38 @@ public class RoundManager : MonoBehaviour {
         if (recommendataionSystem.denyCount >= 10)
         {
             recommendataionSystem.denyCount = 0;
-            notificationSystem.Notify(NotificationType.Warning, "You've been ignoring a lot of reccomendations, maybe try listening to a few to raise profits.");
+            notificationSystem.Notify(NotificationType.Information, "You've been ignoring a lot of reccomendations, maybe try listening to a few to raise profits.");
         }
         recommendataionSystem.ClearRecommendation ();
-
-		Submit ();
-		StartSimulationPhase ();
-	}
+        
+        Submit ();
+        for (int x = 0; x < shipListController.entries.Count; x++)
+        {
+            print(shipListController.entries[x].priorityInput.textComponent.text);
+            if (shipListController.entries[x].priorityInput.text != "")
+            {
+                if (shipListController.entries[x].status.text == ShipStatus.Leaving.ToString() && Int32.Parse(shipListController.entries[x].priority.text) > Int32.Parse(shipListController.entries[x].priorityInput.textComponent.text))
+                {
+                    notificationSystem.Notify(NotificationType.Information, "Leaving ships can wait on sides to allow entering ships to pass, try not to prioritize them.");
+                }
+            }
+        }
+        StartSimulationPhase ();
+        for (int x = 0; x < shipListController.entries.Count; x++)
+        {
+            if (shipListController.entries[x].status.text != ShipStatus.Unloading.ToString())
+            {
+                for (int y = x + 1; y < shipListController.entries.Count; y++)
+                {
+                    if (shipListController.entries[y].status.text == ShipStatus.Unloading.ToString()
+                        && shipListController.entries[x].type.text == shipListController.entries[y].type.text)
+                    {
+                        notificationSystem.Notify(NotificationType.Information, "Remember not to prioritize Ships over unloading ones of the same industry.");
+                    }
+                }
+            }
+        }
+    }
 
 	private void Submit() {
 		networkScheduler.RequestReschedule ();
