@@ -57,7 +57,7 @@ public class ShipScheduler {
 		}
 	}
 
-	private ShipSchedule PathToSchedule(ShipPath path) {
+	private ShipSchedule PathToSchedule(ShipPath shipPath) {
 		double defaultShipSpeed = GameObject.Find("SceneSetting").GetComponent<SceneSetting>().ShipSpeed;
 		double shipSpeed = defaultShipSpeed;
 		ShipSchedule schedule = new ShipSchedule();
@@ -68,7 +68,7 @@ public class ShipScheduler {
 		bool unloadingScheduled = false;
 
 		Node previousNode = null;
-		foreach (Node node in path.path) {
+		foreach (Node node in shipPath.nodes) {
 			ShipMoveTask moveTask = new ShipMoveTask();
 			moveTask.Position = new Vector2((float)node.X, (float)node.Y);
 
@@ -92,6 +92,7 @@ public class ShipScheduler {
 			currentPosition = new Vector2((float)node.X, (float)node.Y);
 
 			schedule.AppendTask(moveTask);
+			
 
 			// Unloading task
 			double unloadingSpeed = GameObject.Find("SceneSetting").GetComponent<SceneSetting>().UnloadingSpeed;

@@ -90,6 +90,26 @@ public class RoundManager : MonoBehaviour {
 	}
 
 	public void StartDecisionPhase() {
+		Debug.Log("Start Decision Phase");
+		PriorityQueue priorityQueue = GameObject.Find("PriorityQueue").GetComponent<PriorityQueue>();
+		foreach (var ship in priorityQueue.queue) {
+			double weight;
+			double maintainess = 0.000002;
+			double overdue = 0.00005;
+			double cargo = ship.Ship.cargo;
+			double value = ship.Ship.value;
+			double duration =  6 * 60 * 60;
+			Timer timer = GameObject.Find("Timer").GetComponent<Timer>();
+			var currTime = timer.VirtualTime;
+			weight = cargo * duration * maintainess + cargo * value;
+			if (currTime.CompareTo(ship.Ship.dueTime) > 0) {
+				weight += cargo * duration * overdue;
+			}
+			Debug.Log(cargo);
+			Debug.Log(value);
+			Debug.Log(weight);
+		}
+
 		timeWidgetController.PauseGame ();
 
 		recommendataionSystem.EnableRecommendationButton ();

@@ -3,26 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ShipPath {
-	public List<Node> path = new List<Node>();
+	public List<Node> nodes = new List<Node>();
 
 	public bool IsNodeOnPath(Node node) {
-		return path.Contains(node);
+		return nodes.Contains(node);
 	}
 
 	public void AppendNode(Node node) {
-		path.Add(node);
+		nodes.Add(node);
 	}
 
 	public void AddNodeFromBeginning(Node node) {
-		path.Insert(0, node);
+		nodes.Insert(0, node);
 	}
 
 	public ShipPath ConcatenatePath(ShipPath path) {
 		ShipPath newPath = new ShipPath();
-		foreach (Node node in this.path) {
+		foreach (Node node in this.nodes) {
 			newPath.AppendNode(node);
 		}
-		foreach (Node node in path.path) {
+		foreach (Node node in path.nodes) {
 			newPath.AppendNode(node);
 		}
 		return newPath;

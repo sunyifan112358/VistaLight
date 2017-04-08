@@ -70,7 +70,7 @@ public class NetworkScheduler : MonoBehaviour {
 		progressBar.value = currentStep * 100 / totalStep;
 	}
 
-	private void ClearAllSchedule() { 
+	public void ClearAllSchedule() { 
 		ReservationManager reservationManager = GameObject.Find("MapUtil").GetComponent<ReservationManager>();
 		reservationManager.ClearAll();
 
