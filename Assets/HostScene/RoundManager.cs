@@ -50,7 +50,6 @@ public class RoundManager : MonoBehaviour {
 	void Awake() {
 		logger = GameObject.Find("BasicLoggerManager").GetComponent<VistaLightsLogger>();	
 		sceneSetting = GameObject.Find ("SceneSetting").GetComponent<SceneSetting> ();
-
 		logger.StartRun ("run");
 	}
 
@@ -104,7 +103,7 @@ public class RoundManager : MonoBehaviour {
 	}
 
 	public void StartSimulationPhase() {
-		timeWidgetController.SetSpeedOne ();
+        timeWidgetController.PlayGame();
 
 		recommendataionSystem.DisableRecommendationButton ();
 

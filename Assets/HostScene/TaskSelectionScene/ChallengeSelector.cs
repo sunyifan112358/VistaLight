@@ -7,15 +7,19 @@ public class ChallengeSelector : MonoBehaviour {
 	public SceneSetting sceneSetting;
     public bool randRecommendations;
     public bool randFeedback;
-    public bool tutorialPlayed = false;
-	public bool challenge1Played = false;
-	public bool challenge2Played = false;
-	public bool challenge3Played = false;
+    public bool tutorialPlayed;
+    public bool challenge1Played;
+    public bool challenge2Played;
+    public bool challenge3Played;
 
 	public VistaLightsLogger logger;
 
 	void Awake() {
-		DontDestroyOnLoad(transform.gameObject);
+        tutorialPlayed = "true" == PlayerPrefs.GetString("tutorialplayed", "false");
+        challenge1Played = "true" == PlayerPrefs.GetString("challenge1played", "false");
+        challenge2Played = "true" == PlayerPrefs.GetString("challenge2played", "false");
+        challenge3Played = "true" == PlayerPrefs.GetString("challenge3played", "false");
+        DontDestroyOnLoad(transform.gameObject);
 		DestoryIfInstanceExist ();
         int x = Random.Range(0, 100);
         if (x < 33) {
@@ -61,8 +65,8 @@ public class ChallengeSelector : MonoBehaviour {
         sceneSetting.GiveRecommendation = randRecommendations;
         sceneSetting.GiveFeedback = randFeedback;
         sceneSetting.inTutorial = true;
-		tutorialPlayed = true;
-		StartGame ();
+        PlayerPrefs.SetString("tutorialplayed", "true");
+        StartGame ();
 	}
 
 	public void SelectChallenge1() {
@@ -70,7 +74,7 @@ public class ChallengeSelector : MonoBehaviour {
 		sceneSetting.GiveRecommendation = randRecommendations;
         sceneSetting.GiveFeedback = randFeedback;
         sceneSetting.inTutorial = false;
-		challenge1Played = true;
+        PlayerPrefs.SetString("challenge1Played", "true");
 		StartGame ();
 	}
 
@@ -80,8 +84,7 @@ public class ChallengeSelector : MonoBehaviour {
         sceneSetting.GiveFeedback = randFeedback;
         //sceneSetting.RecommendWithJustification = false;
         sceneSetting.inTutorial = false;
-		challenge2Played = true;
-
+        PlayerPrefs.SetString("challenge2Played", "true");
 		StartGame ();
 	}
 
@@ -91,7 +94,7 @@ public class ChallengeSelector : MonoBehaviour {
         sceneSetting.GiveFeedback = randFeedback;
         //sceneSetting.RecommendWithJustification = true;
         sceneSetting.inTutorial = false;
-		challenge3Played = true;
+        PlayerPrefs.SetString("challenge3Played", "true");
 		StartGame ();
 	}
 

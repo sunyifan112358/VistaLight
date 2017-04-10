@@ -179,7 +179,7 @@ public class VistaLightsLogger : MonoBehaviour {
 		inRun = true;
 	}
 
-	public void EndRun(double money, double welfare, double dockUtilization) {
+    public void EndRun(double money, double welfare, double dockUtilization) {
         LogAllShipsStates();
 		JSONClass details = new JSONClass ();
 		AddTimeInformation (details);

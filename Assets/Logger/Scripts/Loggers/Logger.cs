@@ -47,7 +47,7 @@ public class Logger : ILogger
 		}
 		m_adapters = adapters;
 
-		m_player_id = player_id;
+		m_player_id = SystemInfo.deviceUniqueIdentifier;
 		m_session_id = System.Guid.NewGuid().ToString();
 		m_run_id = null;
 		m_run_count = 0;

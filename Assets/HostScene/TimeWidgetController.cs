@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class TimeWidgetController : MonoBehaviour {
 
 	public Timer timer;
+    public double lastSpeed;
 
 	public Image PauseButtonImage;
 	public Image Speed1ButtonImage;
@@ -27,6 +28,7 @@ public class TimeWidgetController : MonoBehaviour {
 		// SelectedImage = Resources.Load ("image/SpeedButtonSelected.png") as Sprite;
 		// UnselectedImage = Resources.Load ("image/SpeedButton.png") as Sprite;
 		logger = GameObject.Find("BasicLoggerManager").GetComponent<VistaLightsLogger>();
+        lastSpeed = 100;
 	}
 
 	public void PauseGameButtonClickHandler(){
@@ -39,13 +41,28 @@ public class TimeWidgetController : MonoBehaviour {
 	}
 
 	public void PauseGame() {
-		
+        lastSpeed = timer.speed;
 		SetGameSpeed (0);
 		SelectButton (PauseButtonImage);
 		PauseRedBorder.SetActive (true);
 	}
 
-	public void SpeedOneButtonClickHandler() {
+    public void PlayGame()
+    {
+        if (lastSpeed == 100) {
+            SetSpeedOne();
+        }
+        else if (lastSpeed == 400)
+        {
+            SetSpeedTwo();
+        }
+        else if (lastSpeed == 1500)
+        {
+            SetSpeedThree();
+        }
+    }
+
+    public void SpeedOneButtonClickHandler() {
 		if (roundManager.phase == GamePhase.Decision) {
 			notificationSystem.Notify (NotificationType.Warning, 
 				"Please use the \"Submit and Continue\" button to submit your decision and enter simulation phase");
