@@ -15,6 +15,7 @@ public class MapSerializer {
 	}
 
 	public Map LoadMap(string path) {
+        //Change reference to path of file to Resources.Load for file.
 		Map map = null;
 		try {
 			FileStream file = File.Open(path, FileMode.Open);
