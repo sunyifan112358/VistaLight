@@ -11,10 +11,10 @@ public class MapLoader : MonoBehaviour {
 	public void LoadMap () {
 		// Load map
 		string mapName = GameObject.Find("SceneSetting").GetComponent<SceneSetting>().MapName;
-		string path = Application.streamingAssetsPath + "/" + mapName + ".vlmap";
+		//string path = Application.streamingAssetsPath + "/" + mapName + ".vlmap";
         MapController mapController = GameObject.Find("Map").GetComponent<MapController>();
 		MapSerializer mapSerializer = new MapSerializer();
-		map = mapSerializer.LoadMap(path);
+		map = mapSerializer.LoadMap(mapName);
 		mapController.RegenerateMap(map);
 
 		timer.VirtualTime = map.StartTime;

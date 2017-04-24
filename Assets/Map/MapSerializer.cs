@@ -14,11 +14,12 @@ public class MapSerializer {
 		file.Close();
 	}
 
-	public Map LoadMap(string path) {
+	public Map LoadMap(string mapfile) {
         //Change reference to path of file to Resources.Load for file.
 		Map map = null;
 		try {
-			FileStream file = File.Open(path, FileMode.Open);
+            TextAsset ta = (TextAsset) Resources.Load(mapfile);
+            Stream file = new MemoryStream(ta.bytes);
 			BinaryFormatter deserializer = new BinaryFormatter();
 			map = (Map)deserializer.Deserialize(file);
 			RecoverReferenceInNodes(map);

@@ -25,7 +25,7 @@ public class FileAdapter : BaseAdapter
 		m_inited = true;
 
 		try {
-			m_out = new StreamWriter(node["data"]["session_id"] + ".json");
+			m_out = new StreamWriter(logfilePrefix + "-" + System.Guid.NewGuid().ToString() + ".json");
 			
 			m_out.Write("# version:1\n");
 			m_out.Flush();
