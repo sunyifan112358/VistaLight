@@ -77,7 +77,7 @@ public class RoundManager : MonoBehaviour {
 
 		if (phase == GamePhase.Simulation) {
 			DateTime currentVirtualTime = timer.VirtualTime;
-			if (currentVirtualTime >= SimulationPhaseStartTime + DecisionInterval && sceneSetting.GiveRecommendation == true) {
+			if (currentVirtualTime >= SimulationPhaseStartTime + DecisionInterval) {
 				StartDecisionPhase ();
 			}
 		} else if(phase == GamePhase.Decision) {

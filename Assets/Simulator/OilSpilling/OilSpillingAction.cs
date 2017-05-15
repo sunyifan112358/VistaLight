@@ -178,8 +178,9 @@ public class OilSpillingAction : MonoBehaviour {
 				"Cannot burn. There are one or more ships in the oil-polluted area");
 			return;
 		}
-
-		StopTraffic();
+        notificationSystem.Notify(NotificationType.Information,
+                "Burning the Oil will cause the most Damage to the Port's Welfare despite being cheapest and quickest option other than doing nothing.");
+        StopTraffic();
 		solution = OilSpillSolution.Burn;
 
 		budgetCounter.SpendMoney (1000000);
@@ -192,7 +193,9 @@ public class OilSpillingAction : MonoBehaviour {
 	}
 
 	public void Dispersant() {
-		solution = OilSpillSolution.Dispersant;
+        notificationSystem.Notify(NotificationType.Information,
+                "Using Dispersant on the Oil forces traffic to slow for 48 hours, making it the slowest option.");
+        solution = OilSpillSolution.Dispersant;
 
 		budgetCounter.SpendMoney (2000000);
 
@@ -207,14 +210,16 @@ public class OilSpillingAction : MonoBehaviour {
 	}
 
 	public void Skimmers() {
-
-		if (hasShipInOilArea()) {
+        if (hasShipInOilArea()) {
 			notificationSystem.Notify (NotificationType.Warning, 
 				"Cannot use skimmers. There are one or more ships in the oil-polluted area");
 			return;
 		}
 
-		StopTraffic();
+        notificationSystem.Notify(NotificationType.Information,
+                "Using Skimmers on the Oil is least damaging to welfare, but also the most expensive and stops traffic for 24 hours.");
+
+        StopTraffic();
 
 		solution = OilSpillSolution.Skimmers;
 		SetCleaningSpeed ();

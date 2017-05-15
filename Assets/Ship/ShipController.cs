@@ -27,7 +27,9 @@ public class ShipController : MonoBehaviour {
 	public Text NameText;
 	public Text PriorityText;
 	public Text StatusText;
-	public Text RemainingTime;
+    public Text MoneyText;
+    public Text WelfareText;
+    public Text RemainingTime;
 	public Text IndustryText;
 	public GameObject CargoBar;
 
@@ -94,9 +96,17 @@ public class ShipController : MonoBehaviour {
 		NameText.text = ship.Name;
 		PriorityText.text = String.Format ("Pri: {0}", GetShipPriority () + 1);
 		StatusText.text = String.Format ("Sta: {0}", status.ToString());
+        MoneyText.text = String.Format("$: {0}", ship.value.ToString());
+        if (GameObject.Find("Timer").GetComponent<Timer>().VirtualTime >= ship.dueTime)
+        {
+            WelfareText.text = String.Format("Welf: {0}", ship.cargo * 1e-9 * GameObject.Find("Timer").GetComponent<Timer>().TimeElapsed.TotalSeconds);
+        }
+        else {
+            WelfareText.text = String.Format("Welf: {0}", 0);
+        }
 
 
-		DateTime currentTime = GameObject.Find ("Timer").GetComponent<Timer> ().VirtualTime;
+        DateTime currentTime = GameObject.Find ("Timer").GetComponent<Timer> ().VirtualTime;
 		DateTime dueTime = ship.dueTime;
 		TimeSpan timeLeft = dueTime - currentTime;
 		RemainingTime.text = string.Format("{0} days {1}:{2}", timeLeft.Days, Math.Abs(timeLeft.Hours), Math.Abs(timeLeft.Minutes));
