@@ -127,25 +127,25 @@ public class MapController : MonoBehaviour {
 	}
 
 	public void SelectNode(GameObject node) {
-		node.transform.FindChild("NodeDot").GetComponent<SpriteRenderer>().enabled = false;
-		node.transform.FindChild("NodeDotSelected").GetComponent<SpriteRenderer>().enabled = true;
+		node.transform.Find("NodeDot").GetComponent<SpriteRenderer>().enabled = false;
+		node.transform.Find("NodeDotSelected").GetComponent<SpriteRenderer>().enabled = true;
 	}
 
 	public void DeselectNode(GameObject node) {
 		if (node != null) {
-			node.transform.FindChild("NodeDot").GetComponent<SpriteRenderer>().enabled = true;
-			node.transform.FindChild("NodeDotSelected").GetComponent<SpriteRenderer>().enabled = false;
+			node.transform.Find("NodeDot").GetComponent<SpriteRenderer>().enabled = true;
+			node.transform.Find("NodeDotSelected").GetComponent<SpriteRenderer>().enabled = false;
 		}
 	}
 
 	public void SelectMapEvent(GameObject mapEvent) {
-		mapEvent.transform.FindChild("EventSelected").gameObject.SetActive(false);	
-		mapEvent.transform.FindChild("Event").gameObject.SetActive(true);	
+		mapEvent.transform.Find("EventSelected").gameObject.SetActive(false);	
+		mapEvent.transform.Find("Event").gameObject.SetActive(true);	
 	}
 
 	public void DeselectMapEvent(GameObject mapEvent) { 
-		mapEvent.transform.FindChild("EventSelected").gameObject.SetActive(true);	
-		mapEvent.transform.FindChild("Event").gameObject.SetActive(false);	
+		mapEvent.transform.Find("EventSelected").gameObject.SetActive(true);	
+		mapEvent.transform.Find("Event").gameObject.SetActive(false);	
 	}
 
 	public void RemoveNode(GameObject nodeGO) {

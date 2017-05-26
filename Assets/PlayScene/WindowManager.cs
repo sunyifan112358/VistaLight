@@ -94,22 +94,22 @@ public class WindowManager: MonoBehaviour {
 
 	public void ShowTab1(){
 		tab1.gameObject.transform.SetSiblingIndex (3);
-		tab2.transform.FindChild ("Panel").gameObject.SetActive(false);
-		tab3.transform.FindChild ("Panel").gameObject.SetActive(false);
+		tab2.transform.Find ("Panel").gameObject.SetActive(false);
+		tab3.transform.Find ("Panel").gameObject.SetActive(false);
 
 		OpenBottomPanel ();
 	}
 
 	public void ShowTab2(){
 		tab2.gameObject.transform.SetSiblingIndex (2);
-		tab2.transform.FindChild ("Panel").gameObject.SetActive(true);
-		tab3.transform.FindChild ("Panel").gameObject.SetActive(false);
+		tab2.transform.Find ("Panel").gameObject.SetActive(true);
+		tab3.transform.Find ("Panel").gameObject.SetActive(false);
 
 		OpenBottomPanel ();
 	}
 
 	public void ShowTab3(){
-		tab3.transform.FindChild ("Panel").gameObject.SetActive(true);
+		tab3.transform.Find ("Panel").gameObject.SetActive(true);
 		tab3.gameObject.transform.SetSiblingIndex (3);
 
 		OpenBottomPanel ();

@@ -26,11 +26,11 @@ public class ConnectionVO : MonoBehaviour {
 		gameObject.transform.rotation = Quaternion.FromToRotation(new Vector3(1, 0, 0), startPosition - endPosition);
 
 		if (connection.Bidirectional) {
-			gameObject.transform.FindChild("Unidirectional").GetComponent<SpriteRenderer>().enabled = false;
-			gameObject.transform.FindChild("Bidirectional").GetComponent<SpriteRenderer>().enabled = true;
+			gameObject.transform.Find("Unidirectional").GetComponent<SpriteRenderer>().enabled = false;
+			gameObject.transform.Find("Bidirectional").GetComponent<SpriteRenderer>().enabled = true;
 		} else {
-			gameObject.transform.FindChild("Unidirectional").GetComponent<SpriteRenderer>().enabled = true;
-			gameObject.transform.FindChild("Bidirectional").GetComponent<SpriteRenderer>().enabled = false;
+			gameObject.transform.Find("Unidirectional").GetComponent<SpriteRenderer>().enabled = true;
+			gameObject.transform.Find("Bidirectional").GetComponent<SpriteRenderer>().enabled = false;
 		}
 	}
 	

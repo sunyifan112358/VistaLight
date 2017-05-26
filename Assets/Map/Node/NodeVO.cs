@@ -32,18 +32,18 @@ public class NodeVO : MonoBehaviour, MapSelectableVO {
 	}
 
 	public void Select() {
-		gameObject.transform.FindChild("NodeDot").gameObject.SetActive(false);
-		gameObject.transform.FindChild("NodeDotSelected").gameObject.SetActive(true);
+		gameObject.transform.Find("NodeDot").gameObject.SetActive(false);
+		gameObject.transform.Find("NodeDotSelected").gameObject.SetActive(true);
 	}
 
 	public void Deselect() {
-		gameObject.transform.FindChild("NodeDot").gameObject.SetActive(true);
-		gameObject.transform.FindChild("NodeDotSelected").gameObject.SetActive(false);
+		gameObject.transform.Find("NodeDot").gameObject.SetActive(true);
+		gameObject.transform.Find("NodeDotSelected").gameObject.SetActive(false);
 	}
 
     public GameObject GetSidePanel()
     {
-		GameObject sidePanel = GameObject.Find("SidePanels").transform.FindChild("NodeInformationSidePanel").gameObject;
+		GameObject sidePanel = GameObject.Find("SidePanels").transform.Find("NodeInformationSidePanel").gameObject;
 		NodeInformationSidePanelController controller = sidePanel.GetComponent<NodeInformationSidePanelController>();
 		controller.node= node;
 		controller.UpdateDisplay();

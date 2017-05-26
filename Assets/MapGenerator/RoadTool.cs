@@ -97,7 +97,7 @@ public class RoadTool : IMapEditorTool
 		tempNode = GameObject.Instantiate(nodePrefab);
 		tempNode.tag = "Untagged";
 		tempNode.GetComponent<CircleCollider2D>().enabled = false;
-		tempNode.transform.FindChild("NodeDot").GetComponent<SpriteRenderer>().color = Color.blue;
+		tempNode.transform.Find("NodeDot").GetComponent<SpriteRenderer>().color = Color.blue;
 	}
 
 	private void UpdateTemporaryNodePosition() {
@@ -138,7 +138,7 @@ public class RoadTool : IMapEditorTool
 		nodeVO.Update();
 		nodeGO.tag = "Untagged";
 		nodeGO.transform.SetParent(tempRoad.transform);
-		nodeGO.transform.FindChild("NodeDot").GetComponent<SpriteRenderer>().color = Color.blue;
+		nodeGO.transform.Find("NodeDot").GetComponent<SpriteRenderer>().color = Color.blue;
 		
 		return nodeGO;
 	}

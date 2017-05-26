@@ -66,13 +66,13 @@ public class MapEventVO : MonoBehaviour, MapSelectableVO {
     public GameObject GetSidePanel()
     {
 		if (MapEvent is ShipGenerationEvent) {
-			GameObject sidePanel = GameObject.Find("SidePanels").transform.FindChild("ShipGenerationMapEventSidePanel").gameObject;
+			GameObject sidePanel = GameObject.Find("SidePanels").transform.Find("ShipGenerationMapEventSidePanel").gameObject;
 			ShipGenerationEventSidePanelController controller = sidePanel.GetComponent<ShipGenerationEventSidePanelController>();
 			controller.shipGenerationEvent = (ShipGenerationEvent)MapEvent;
 			controller.UpdateDisplay();
 			return sidePanel;
 		} else if (MapEvent is OilSpillingEvent) {
-			GameObject sidePanel = GameObject.Find("SidePanels").transform.FindChild("OilSpillingMapEventSidePanel").gameObject;
+			GameObject sidePanel = GameObject.Find("SidePanels").transform.Find("OilSpillingMapEventSidePanel").gameObject;
 			OilSpillingMapEventSidePanelController controller = sidePanel.GetComponent<OilSpillingMapEventSidePanelController>();
 			controller.OilSpillingEvent = (OilSpillingEvent)MapEvent;
 			controller.UpdateDisplay();

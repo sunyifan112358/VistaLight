@@ -39,9 +39,9 @@ public class DockVO : MonoBehaviour, MapSelectableVO {
 
 		foreach (IndustryType type in Enum.GetValues(typeof(IndustryType))) {
 			if (type == dock.type) {
-				gameObject.transform.FindChild(type.ToString()).GetComponent<SpriteRenderer>().enabled = true;
+				gameObject.transform.Find(type.ToString()).GetComponent<SpriteRenderer>().enabled = true;
 			} else {
-				gameObject.transform.FindChild(type.ToString()).GetComponent<SpriteRenderer>().enabled = false;
+				gameObject.transform.Find(type.ToString()).GetComponent<SpriteRenderer>().enabled = false;
 			}
 		}
 
@@ -79,11 +79,11 @@ public class DockVO : MonoBehaviour, MapSelectableVO {
 	}
 
 	public void Select() {
-		gameObject.transform.FindChild("SelectCircle").gameObject.SetActive(true);
+		gameObject.transform.Find("SelectCircle").gameObject.SetActive(true);
 	}
 
 	public void Deselect() {
-		gameObject.transform.FindChild("SelectCircle").gameObject.SetActive(false);
+		gameObject.transform.Find("SelectCircle").gameObject.SetActive(false);
 	}
 
     public GameObject GetSidePanel()
