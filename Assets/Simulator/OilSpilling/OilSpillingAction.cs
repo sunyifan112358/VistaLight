@@ -75,15 +75,16 @@ public class OilSpillingAction : MonoBehaviour {
 		switch (solution) {
 		case OilSpillSolution.Burn:
 			speed = 1.0 * OilSpillingController.Amount / 10 / 3600;
-			welfareImpact = 1.5 / 10000;
+			welfareImpact = 2 / 10000;
 			break;
 		case OilSpillSolution.Dispersant:
 			speed = 1.0 * OilSpillingController.Amount / 48 / 3600;
-			welfareImpact = 1 / 10000;
+			welfareImpact = 1.5 / 10000;
 			break;
 		case OilSpillSolution.Skimmers:
-			speed = 1.0 * OilSpillingController.Amount / 24 / 3600;
-			break;
+			speed = 1.0 * OilSpillingController.Amount / 12 / 3600;
+            welfareImpact = 0.5 / 10000;
+            break;
 		}
 	}
 

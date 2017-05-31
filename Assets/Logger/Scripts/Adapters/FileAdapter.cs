@@ -108,6 +108,7 @@ public class FileAdapter : BaseAdapter
             WWW data;
             // string node_output = WWW.EscapeURL(node.ToString().Trim());
             string url = urlBase + "&json=" + node_output + "&file=optimization/" + node["data"]["session_id"] + ".json";
+            print(url);
             WWWForm form = new WWWForm();
             form.AddField("data", node_output);
             data = new WWW(url, form);
@@ -128,7 +129,6 @@ public class FileAdapter : BaseAdapter
 
 
     }
-
 
     IEnumerator DoWWW(WWW www)
     {
