@@ -28,6 +28,7 @@ public class SimpleWWWAdapter : BaseAdapter
     void
     Handle(JSONClass node)
     {
+        Debug.Log(node);
         Debug.Log(node["data"]["session_id"]);
 
         string node_output = WWW.EscapeURL(node.ToString().Trim());
