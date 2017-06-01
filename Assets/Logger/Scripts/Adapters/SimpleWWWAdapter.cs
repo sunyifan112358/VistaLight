@@ -31,7 +31,7 @@ public class SimpleWWWAdapter : BaseAdapter
         Debug.Log(node);
         Debug.Log(node["data"]["session_id"]);
 
-        string node_output = WWW.EscapeURL(node.ToString().Trim());
+        string node_output = WWW.EscapeURL(node.ToString().Trim().Replace("\n", " ") + "\n");
         string url = urlBase + "&json=" + node_output + "&file=vista/" + node["data"]["session_id"] + ".json";
         WWWForm form = new WWWForm();
         form.AddField("data", node_output);
