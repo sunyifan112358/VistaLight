@@ -253,15 +253,17 @@ public class Logger : ILogger
             BeginRunImpl(null, null, true);
         }
 
-
-
+        
         JSONClass data = new JSONClass();
-        data["run_id"] = StringOrEmpty(m_run_id);
-        data["action_seqno"] = m_action_count.ToString();
-        data["type"] = type.ToString();
-        data["client_time"] = GetTimestampNow().ToString();
+        if (type != 99)
+        {
+            data["run_id"] = StringOrEmpty(m_run_id);
+            data["action_seqno"] = m_action_count.ToString();
+            data["type"] = type.ToString();
+            data["client_time"] = GetTimestampNow().ToString();
+        }
         data["details"] = ClassOrEmpty(details);
-
+        
         JSONClass node = new JSONClass();
         node["type"] = "action";
         data["session_id"] = StringOrEmpty(m_session_id);
@@ -271,7 +273,6 @@ public class Logger : ILogger
         {
             adapter.Handle(node);
         }
-
 
 
         ++m_action_count;

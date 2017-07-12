@@ -46,6 +46,7 @@ public class ShipListController : MonoBehaviour {
         if (sameShipCount > 4 && sameWaitingShipCount >= sameShipCount/2) {
             roundManager.notificationSystem.Notify(NotificationType.Information, "Prioritize industries that are unloading significantly less");
         }
+        entryController.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         entries.Add (entryController);
         /*
 		if (roundManager.phase == GamePhase.Decision) {

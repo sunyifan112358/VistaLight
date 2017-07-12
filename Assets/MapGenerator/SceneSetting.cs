@@ -8,6 +8,10 @@ public class SceneSetting : MonoBehaviour {
 		DestoryIfInstanceExist ();
 	}
 
+    void Update() {
+        Resources.UnloadUnusedAssets();
+    }
+
 	private static SceneSetting instance = null;
 	void DestoryIfInstanceExist() {
 		if (instance != null) {

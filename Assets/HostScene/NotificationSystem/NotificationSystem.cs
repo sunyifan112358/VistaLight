@@ -65,8 +65,9 @@ public class NotificationSystem : MonoBehaviour {
 		NotificationBoxes.Add(notificationBox);
 
 		notificationGO.transform.SetParent(notificationList.transform);
+        notificationGO.transform.localScale = new Vector3(1, 1, 1);
 
-		UpdateStyle ();
+        UpdateStyle ();
 
 		ScrollToBottom ();
 	}

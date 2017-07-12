@@ -12,6 +12,7 @@ public class ChallengeSelector : MonoBehaviour {
     public bool challenge1Played;
     public bool challenge2Played;
     public bool challenge3Played;
+    public bool questionnaireFilled;
 
 	public VistaLightsLogger logger;
 
@@ -41,7 +42,7 @@ public class ChallengeSelector : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!GameObject.Find("ToggleReccomendations").GetComponent<Toggle>().isOn) {
+        if (SceneManager.GetActiveScene().name == "TaskSelection" && !GameObject.Find("ToggleReccomendations").GetComponent<Toggle>().isOn) {
             GameObject.Find("ToggleFeedback").GetComponent<Toggle>().isOn = false;
         }
     }
@@ -84,7 +85,13 @@ public class ChallengeSelector : MonoBehaviour {
 		StartGame ();
 	}
 
-	private void StartGame() {
+    public void SelectScenarioGenerator()
+    {
+        sceneSetting.MapName = "houston_game_0";
+        SceneManager.LoadScene("MapGenerator", LoadSceneMode.Single);
+    }
+
+    private void StartGame() {
 		SceneManager.LoadScene("HostGameScene", LoadSceneMode.Single);
 	}
 }

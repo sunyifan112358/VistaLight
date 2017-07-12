@@ -53,12 +53,10 @@ public class MapInfoSidePanelController : MonoBehaviour {
 
 	public void LoadMap() {
 		CloseMap();
+        
+        path = GameObject.Find("SceneSetting").GetComponent<SceneSetting>().MapName;
 
-		#if UNITY_EDITOR
-		path = EditorUtility.OpenFilePanel("Load map", "", "vlmap");
-		#endif
-
-		MapSerializer mapSerializer = new MapSerializer();
+        MapSerializer mapSerializer = new MapSerializer();
 		this.map = mapSerializer.LoadMap(path);
 
 		mapController.RegenerateMap(map);
