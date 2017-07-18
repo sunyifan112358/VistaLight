@@ -99,7 +99,10 @@ public class RoundManager : MonoBehaviour {
 		DecisionPhaseStartTime = DateTime.Now;
 		phase = GamePhase.Decision;
 
-		logger.LogPhaseChange (GamePhase.Decision);
+        double money = GameObject.Find("BudgetCounter").GetComponent<BudgetCounter>().money;
+        double welfare = GameObject.Find("WelfareCounter").GetComponent<WelfareCounter>().Welfare;
+
+        logger.LogPhaseChange (GamePhase.Decision, money, welfare);
 	}
 
 	public void StartSimulationPhase() {
@@ -113,7 +116,10 @@ public class RoundManager : MonoBehaviour {
 		SimulationPhaseStartTime = timer.VirtualTime;
 		phase = GamePhase.Simulation;
 
-		logger.LogPhaseChange (GamePhase.Simulation);
+        double money = GameObject.Find("BudgetCounter").GetComponent<BudgetCounter>().money;
+        double welfare = GameObject.Find("WelfareCounter").GetComponent<WelfareCounter>().Welfare;
+
+		logger.LogPhaseChange (GamePhase.Simulation, money, welfare);
 	}
 
 	public void SubmitAndContinueButtonClickHandler() {

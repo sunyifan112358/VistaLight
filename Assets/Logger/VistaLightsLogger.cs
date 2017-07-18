@@ -76,7 +76,7 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogChangeShipPriority(Ship ship, int new_priority) {
-        LogAllShipsStates();
+        // LogAllShipsStates();
         JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details["ship_id"] = ship.shipID.ToString();
@@ -85,7 +85,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogGameOver(double money, double welfare) {
-        LogAllShipsStates();
+        ShipController[] ships = FindObjectsOfType<ShipController>();
+        LogAllShipsStates(money, welfare, ships);
         JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details["budget"] = money.ToString();
@@ -101,7 +102,7 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogOilSpilling(OilSpillingEvent oilSpillingEvent) {
-        LogAllShipsStates();
+        // LogAllShipsStates();
         JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["map_event"] = "Oil Spilling";
@@ -114,7 +115,7 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogShipGeneration(ShipGenerationEvent shipGenerationEvent) {
-        LogAllShipsStates();
+        // LogAllShipsStates();
         JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["map_event"] = "Ship Generation";
@@ -132,7 +133,7 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogRedGreenSignal(Ship ship, string signal) {
-        LogAllShipsStates();
+        // LogAllShipsStates();
         JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["ship_id"] = ship.shipID.ToString();
@@ -140,8 +141,9 @@ public class VistaLightsLogger : MonoBehaviour {
 		TheLogger.instance.TakeAction(1, details);
 	}
 
-	public void LogPhaseChange(GamePhase phase) {
-        LogAllShipsStates();
+	public void LogPhaseChange(GamePhase phase, double money, double welfare) {
+        ShipController[] ships = FindObjectsOfType<ShipController>();
+        LogAllShipsStates(money, welfare, ships);
         JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["phase"] = phase.ToString();
@@ -156,7 +158,7 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
 	public void LogRecommendationAction(bool isAccepted, Recommendation recommendation) {
-        LogAllShipsStates();
+        // LogAllShipsStates();
         JSONClass details = new JSONClass();
 		AddTimeInformation (details);
 		details ["isAccepted"] = isAccepted.ToString();
@@ -180,7 +182,8 @@ public class VistaLightsLogger : MonoBehaviour {
 	}
 
     public void EndRun(double money, double welfare, double dockUtilization) {
-        LogAllShipsStates();
+        ShipController[] ships = FindObjectsOfType<ShipController>();
+        LogAllShipsStates(money, welfare, ships);
 		JSONClass details = new JSONClass ();
 		AddTimeInformation (details);
 		details["budget"] = money.ToString();
@@ -190,24 +193,29 @@ public class VistaLightsLogger : MonoBehaviour {
 		inRun = false;
 	}
 
-    public void LogAllShipsStates() {
-        ShipController[] ships = FindObjectsOfType<ShipController>();
+    public void LogAllShipsStates(double money, double welfare, ShipController[] ships) {
         JSONClass details = new JSONClass();
         AddTimeInformation(details);
         details["log_event"] = "Log All Ship States";
-        for (int x = 0; x < ships.Length; x++)
+        details["budget"] = money.ToString();
+        details["welfare"] = welfare.ToString();
+        JSONClass shipsJSONObj = new JSONClass();
+        details["ships"] = shipsJSONObj;
+        for (int i = 0; i < ships.Length; i++)
         {
-            details["x " + x] = ships[x].Ship.X.ToString();
-            details["y " + x] = ships[x].Ship.Y.ToString();
+            JSONClass shipJSONObj = new JSONClass();
+            shipJSONObj["x"] = ships[i].Ship.X.ToString();
+            shipJSONObj["y"] = ships[i].Ship.Y.ToString();
+            shipJSONObj["priority"] = ships[i].GetShipPriority().ToString();
+            shipJSONObj["ship_id"] = ships[i].Ship.shipID.ToString();
+            shipJSONObj["name"] = ships[i].Ship.Name;
+            shipJSONObj["status"] = ships[i].status.ToString();
+            shipJSONObj["industry"] = ships[i].Ship.Industry.ToString();
+            shipJSONObj["cargo"] = ships[i].Ship.cargo.ToString();
+            shipJSONObj["value"] = ships[i].Ship.value.ToString();
+            shipJSONObj["due_time"] = ships[i].Ship.dueTime.ToString();
 
-            details["priority" + x] = ships[x].GetShipPriority().ToString();
-            details["ship_id " + x] = ships[x].Ship.shipID.ToString();
-            details["name " + x] = ships[x].Ship.Name;
-            details["status " + x] = ships[x].status.ToString();
-            details["industry " + x] = ships[x].Ship.Industry.ToString();
-            details["cargo " + x] = ships[x].Ship.cargo.ToString();
-            details["value " + x] = ships[x].Ship.value.ToString();
-            details["due_time " + x] = ships[x].Ship.dueTime.ToString();
+            shipsJSONObj[ships[i].Ship.shipID.ToString()] = shipJSONObj;
         }
         TheLogger.instance.TakeAction(1, details);
     }
