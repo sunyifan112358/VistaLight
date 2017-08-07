@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MapEditorController : MonoBehaviour {
 
@@ -127,5 +128,10 @@ public class MapEditorController : MonoBehaviour {
 		shipPanel.SetActive(false);
 		cameraController.interactable = true;
 	}
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("TaskSelection");
+    }
 
 }

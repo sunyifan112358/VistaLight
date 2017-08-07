@@ -54,8 +54,8 @@ public class MapInfoSidePanelController : MonoBehaviour {
 	public void LoadMap() {
 		CloseMap();
         
-        path = GameObject.Find("SceneSetting").GetComponent<SceneSetting>().MapName;
-
+        path = GameObject.Find("SavedMaps").GetComponent<Dropdown>().captionText.text;
+        GameObject.Find("SceneSetting").GetComponent<SceneSetting>().MapName = path;
         MapSerializer mapSerializer = new MapSerializer();
 		this.map = mapSerializer.LoadMap(path);
 
@@ -108,7 +108,7 @@ public class MapInfoSidePanelController : MonoBehaviour {
 	}
 
 	public void UpdateDisplay() {
-		mapNameInput.text = map.Name;
+		mapNameInput.text = path;
 		startTimeInput.text = map.StartTime.ToString(Map.DateTimeFormat);
 		endTimeInput.text = map.EndTime.ToString (Map.DateTimeFormat);
 		targetBudgetInput.text = map.TargetBudget.ToString ();
