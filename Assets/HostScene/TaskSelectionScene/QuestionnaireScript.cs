@@ -5,17 +5,20 @@ using UnityEngine.UI;
 
 public class QuestionnaireScript : MonoBehaviour {
 
-    public InputField ageField, ethnicityField;
-    public Dropdown genderField, educationField, employmentField;
+    public InputField ageField;
+    public Dropdown ethnicityField, raceField, genderField, educationField, employmentField;
     public Text error;
     public VistaLightsLogger logger;
     public ChallengeSelector cs;
+    public GameObject infoText;
     // Use this for initialization
     void Start () {
+        infoText = GameObject.Find("Information Message");
         logger = GameObject.Find("BasicLoggerManager").GetComponent<VistaLightsLogger>();
         cs = GameObject.Find("ChallengeSelector").GetComponent<ChallengeSelector>();
         if (cs.questionnaireFilled) {
             gameObject.SetActive(false);
+            infoText.SetActive(false);
         }
     }
 	
@@ -28,13 +31,23 @@ public class QuestionnaireScript : MonoBehaviour {
     }
 
     public void finishQuestionnaire() {
-        if (ageField.text != "" && ethnicityField.text != "")
+        bool isAllFilled = (!ethnicityField.captionText.text.Contains("<")) && (!raceField.captionText.text.Contains("<")) && (!genderField.captionText.text.Contains("<")) && (!educationField.captionText.text.Contains("<")) && (!employmentField.captionText.text.Contains("<"));
+        if (ageField.text != "" && isAllFilled)
         {
-            logger.LogDemographicInfo(ageField.text, ethnicityField.text, genderField.captionText.text, educationField.captionText.text, employmentField.captionText.text);
+            logger.LogDemographicInfo(ageField.text, raceField.captionText.text, ethnicityField.captionText.text, genderField.captionText.text, educationField.captionText.text, employmentField.captionText.text);
             cs.questionnaireFilled = true;
         }
         else {
             error.gameObject.SetActive(true);
         }
+    }
+    public void skipQuestionnaire()
+    {
+        logger.LogDemographicInfo("N/A", "N/A", "N/A", "N/A", "N/A", "N/A");
+        cs.questionnaireFilled = true;
+    }
+    public void doQuestionnaire()
+    {
+        infoText.SetActive(false);
     }
 }

@@ -219,10 +219,11 @@ public class VistaLightsLogger : MonoBehaviour {
         }
         TheLogger.instance.TakeAction(1, details);
     }
-    public void LogDemographicInfo(string age, string ethnicity, string gender, string education, string employment)
+    public void LogDemographicInfo(string age, string race, string ethnicity, string gender, string education, string employment)
     {
         JSONClass details = new JSONClass();
         details["Age"] = age;
+        details["Race"] = race;
         details["Ethnicity"] = ethnicity;
         details["Gender"] = gender;
         details["Education"] = education;
