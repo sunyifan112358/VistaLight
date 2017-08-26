@@ -4,7 +4,8 @@ using UnityEngine;
 // Adapter for logging through HTTP POST using Unity's WWW API.
 public class SimpleWWWAdapter : BaseAdapter
 {
-    private string urlBase = "http://107.21.26.163/secphp/json_to_server.php?user=nugs&pass=7dc2110243bfbd86f83bbeb4d412e1ce";
+    // private string urlBase = "http://107.21.26.163/secphp/json_to_server.php?user=nugs&pass=7dc2110243bfbd86f83bbeb4d412e1ce";
+    private string urlBase = "https://nugamestudiogamelogger.tk/api/log?";
     private WWW data;
 
     public
@@ -31,12 +32,12 @@ public class SimpleWWWAdapter : BaseAdapter
         Debug.Log(node);
         Debug.Log(node["data"]["session_id"]);
 
-        string node_output = WWW.EscapeURL(node.ToString().Trim().Replace("\n", " ") + "\n");
-        string url = urlBase + "&json=" + node_output + "&file=vista/" + node["data"]["session_id"] + ".json";
-        WWWForm form = new WWWForm();
-        form.AddField("data", node_output);
+        string node_output = WWW.EscapeURL(node.ToString().Trim());
+        string url = urlBase + "json=" + node_output;
+        // WWWForm form = new WWWForm();
+        // form.AddField("data", node_output);
 
-        data = new WWW(url, form);
+        data = new WWW(url);
         Debug.Log("Sending data to: " + url);
 
         StartCoroutine(DoWWW(data));
@@ -49,7 +50,7 @@ public class SimpleWWWAdapter : BaseAdapter
         //Debug.Log("Web returned: " + www.text);
         if (www.error != null)
         {
-            Debug.Log("Web error: " + www.error);
+            Debug.Log("Web error: " + www.error + "when sending: " + www.url);
         }
     }
 

@@ -262,11 +262,14 @@ public class Logger : ILogger
             data["type"] = type.ToString();
             data["client_time"] = GetTimestampNow().ToString();
         }
-        data["details"] = ClassOrEmpty(details);
         
         JSONClass node = new JSONClass();
         node["type"] = "action";
         data["session_id"] = StringOrEmpty(m_session_id);
+        data["run_id"] = StringOrEmpty(m_run_id);
+        data["action_seqno"] = m_action_count.ToString();
+        data["client_time"] = GetTimestampNow().ToString();
+        data["details"] = ClassOrEmpty(details);
         node["data"] = data;
 
         foreach (IAdapter adapter in m_adapters)
