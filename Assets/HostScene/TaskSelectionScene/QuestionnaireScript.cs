@@ -11,6 +11,7 @@ public class QuestionnaireScript : MonoBehaviour {
     public VistaLightsLogger logger;
     public ChallengeSelector cs;
     public GameObject infoText;
+    public Toggle ageDisclose;
     // Use this for initialization
     void Start () {
         infoText = GameObject.Find("Information Message");
@@ -32,9 +33,17 @@ public class QuestionnaireScript : MonoBehaviour {
 
     public void finishQuestionnaire() {
         bool isAllFilled = (!ethnicityField.captionText.text.Contains("<")) && (!raceField.captionText.text.Contains("<")) && (!genderField.captionText.text.Contains("<")) && (!educationField.captionText.text.Contains("<")) && (!employmentField.captionText.text.Contains("<"));
-        if (ageField.text != "" && isAllFilled)
+        if ((ageDisclose.isOn || ageField.text != "") && isAllFilled)
         {
-            logger.LogDemographicInfo(ageField.text, raceField.captionText.text, ethnicityField.captionText.text, genderField.captionText.text, educationField.captionText.text, employmentField.captionText.text);
+            string agelog = "";
+            if (ageDisclose.isOn) {
+                agelog = "Prefer not to disclose";
+            }
+            else
+            {
+                agelog = ageField.text;
+            }
+            logger.LogDemographicInfo(agelog, raceField.captionText.text, ethnicityField.captionText.text, genderField.captionText.text, educationField.captionText.text, employmentField.captionText.text);
             cs.questionnaireFilled = true;
         }
         else {
